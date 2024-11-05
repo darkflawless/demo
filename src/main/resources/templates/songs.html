@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Songs</title>
+    <link rel="stylesheet" href="/css/listen.css">
+</head>
+<body>
+<div class="sidebar">
+    <h2>Menu</h2>
+    <ul>
+        <li><a href="/songs" style="color: white;">Songs</a></li>
+        <li><a href="/upload" style="color: white;">Upload</a></li>
+        <li><a href="/media" style="color: white;">Media</a></li>
+    </ul>
+</div>
+
+<div id="content" class="content">
+    <h1>All Songs</h1>
+
+    <!-- Search box -->
+    <label for="searchInput"></label><input type="text"
+       id="searchInput" placeholder="Search for songs..."
+       style="width:90%; padding: 10px; margin-bottom: 10px;">
+
+    <div class="song-list" id="songList">
+        <div th:each="song, iterStat : ${topSongs}" class="song-item"
+             th:classappend="${iterStat.index % 3 == 0} ? 'new-row' : ''">
+            <div class="song-cover play-btn" th:style="'background-image: url(' + @{${song.cover}} + ');'"
+                 th:data-link="@{'/' + ${song.link}}"
+                 th:data-cover="@{'/' + ${song.cover}}"
+                 onclick="playSong(this.getAttribute('data-link'), this.getAttribute('data-cover'))">
+            </div>
+            <span th:text="${song.name}">Song Title</span>
+        </div>
+    </div>
+
+</div>
+
+<div class="now-playing">
+    <div class="cover-container">
+        <img id="cover-image" class="cover-image" src="" alt="Cover Image">
+    </div>
+    <audio id="audio-player" controls style="width: 100%; margin-top: 20px;">
+        <source src="" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    <canvas id="audioVisualizer"></canvas>
+</div>
+
+<div class="recommended-songs">
+    <h2>Recommended</h2>
+    <ul></ul>
+</div>
+
+
+
+<script src="/js/scripts.js"></script>
+<script src="/js/visualizer.js"></script>
+<script src="/js/searchsong.js"></script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/login.css"> <!-- Liên kết đến file CSS -->
+    <title>Đăng nhập</title>
+</head>
+<body>
+<div class="container">
+    <h2>Đăng nhập tài khoản</h2>
+    <form action="/login" method="post">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+        <br>
+        <label for="pass">Password:</label>
+        <input type="password" id="pass" name="pass" required>
+        <br>
+        <button type="submit">Login</button>
+    </form>
+    <p class="register-link">
+        Bạn chưa có tài khoản? <a href="/register">Đăng ký tại đây</a>
+    </p>
+</div>
+</body>
+</html>

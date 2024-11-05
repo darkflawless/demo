@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Files</title>
+    <link rel="stylesheet" href="/css/upload.css">
+</head>
+<body>
+<header>
+    <h1>Upload Files</h1>
+</header>
+<main>
+    <!-- Form upload audio -->
+    <form action="/uploadSong" method="post" enctype="multipart/form-data">
+        <label for="audioFile">Choose a music file:</label>
+        <input type="file" id="audioFile" name="file" accept="audio/*">
+        <button type="submit">Upload</button>
+    </form>
+    <!-- Form upload image -->
+    <form action="/uploadImage" method="post" enctype="multipart/form-data">
+        <label for="imageFile">Choose an image file:</label>
+        <input type="file" id="imageFile" name="file" accept="image/*">
+        <button type="submit">Upload</button>
+    </form>
+
+    <div>
+        <button onclick="goBack()">Back to Previous Page</button>
+    </div>
+    <div>
+        <p th:if="${message}" th:text="${message}"></p>
+    </div>
+</main>
+<script>
+    function goBack() {
+        window.location.href = '/';  // Redirect to the home page
+    }
+</script>
+</body>
+</html>

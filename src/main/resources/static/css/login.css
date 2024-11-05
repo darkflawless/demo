@@ -1,0 +1,97 @@
+/* Đặt nền trang và căn giữa nội dung */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f0f2f5; /* Màu nền sáng hơn */
+}
+
+/* Khung chứa form đăng nhập */
+.container {
+    width: 400px; /* Độ rộng khung */
+    padding: 40px; /* Padding cho khung */
+    background-color: #ffffff; /* Màu nền của khung */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Đổ bóng cho khung */
+    border-radius: 10px; /* Bo góc cho khung */
+    text-align: center; /* Căn giữa văn bản */
+}
+
+/* Tiêu đề */
+.container h2 {
+    margin-bottom: 20px; /* Khoảng cách dưới tiêu đề */
+    color: #333333; /* Màu chữ */
+    font-size: 28px; /* Kích thước chữ */
+    font-weight: 600; /* Độ đậm chữ */
+}
+
+/* Cách bố trí các trường input và nhãn */
+label {
+    display: block; /* Hiển thị nhãn dạng khối */
+    text-align: left; /* Căn trái văn bản nhãn */
+    margin-bottom: 8px; /* Khoảng cách dưới nhãn */
+    color: #555555; /* Màu chữ nhãn */
+}
+
+input[type="email"],
+input[type="password"] {
+    width: 100%; /* Độ rộng full */
+    padding: 12px; /* Padding cho trường input */
+    margin-bottom: 15px; /* Khoảng cách dưới trường input */
+    border: 1px solid #ced4da; /* Đường viền */
+    border-radius: 5px; /* Bo góc cho input */
+    box-sizing: border-box; /* Cách tính kích thước */
+    font-size: 16px; /* Kích thước chữ */
+    color: #495057; /* Màu chữ trong input */
+    background-color: #f8f9fa; /* Màu nền cho input */
+}
+
+/* Hiệu ứng khi người dùng nhập vào trường input */
+input[type="email"]:focus,
+input[type="password"]:focus {
+    border-color: #007bff; /* Đổi màu viền khi focus */
+    outline: none; /* Bỏ viền ngoài */
+    background-color: #ffffff; /* Đổi màu nền khi focus */
+}
+
+/* Nút đăng nhập */
+button[type="submit"] {
+    width: 100%; /* Độ rộng full cho nút */
+    padding: 12px; /* Padding cho nút */
+    background-color: #007bff; /* Màu nền cho nút */
+    border: none; /* Bỏ viền */
+    color: #ffffff; /* Màu chữ nút */
+    font-size: 16px; /* Kích thước chữ */
+    font-weight: bold; /* Độ đậm chữ */
+    border-radius: 5px; /* Bo góc cho nút */
+    cursor: pointer; /* Hiệu ứng con trỏ */
+    transition: background-color 0.3s; /* Hiệu ứng chuyển màu */
+}
+
+button[type="submit"]:hover {
+    background-color: #0056b3; /* Đổi màu khi hover */
+}
+
+/* Phong cách cho liên kết đăng ký */
+.register-link {
+    margin-top: 15px; /* Khoảng cách trên liên kết */
+    color: #555555; /* Màu chữ */
+    font-size: 14px; /* Kích thước chữ */
+}
+
+.register-link a {
+    color: #007bff; /* Màu chữ cho liên kết */
+    text-decoration: none; /* Bỏ gạch chân */
+    font-weight: bold; /* Độ đậm chữ */
+}
+
+.register-link a:hover {
+    text-decoration: underline; /* Gạch chân khi hover */
+}
+
+/* Khoảng cách giữa các phần tử trong form */
+form {
+    margin-bottom: 10px; /* Khoảng cách dưới form */
+}
