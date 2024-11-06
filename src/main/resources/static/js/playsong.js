@@ -1,29 +1,59 @@
-const mainContent = document.getElementById('mainContent');
+document.addEventListener("DOMContentLoaded", function () {
+    const buttons = document.querySelectorAll('.play-btn');
+    const audioPlayer = document.getElementById('audio-player');
+    const audioSource = audioPlayer.querySelector('source');
+    const coverImage = document.getElementById('cover-image');
+    const canvas = document.getElementById('audioVisualizer');
 
-// Hàm phát nhạc khi người dùng nhấn Play
-async function playSong(songUrl, songName) {
-    try {
-        // Cập nhật nội dung bên phải với giao diện player
-        mainContent.innerHTML = `
-            <div class="player-container">
-                <h2>Now Playing: ${songName}</h2>
-                <audio id="audioPlayer" controls autoplay style="width: 100%;">
-                    <source src="${songUrl}" type="audio/mp3">
-                    Your browser does not support the audio element.
-                </audio>
-                <button onclick="goBack()">Back to Song List</button>
-            </div>
-        `;
+    // Add click event to play buttons
+    buttons.forEach(button => {
+        button.addEventListener('click', function () {
+            const songUrl = button.getAttribute('data-link');
+            const coverUrl = button.getAttribute('data-cover');
+            playSong(songUrl, coverUrl);
+        });
+    });
 
-        // Tìm player mới được tạo và phát nhạc
-        const audioPlayer = document.getElementById('audioPlayer');
-        await audioPlayer.play();  // Phát nhạc tự động
-    } catch (error) {
-        console.error('Error playing song:', error);
+    async function playSong(songId, songUrl, coverUrl) {
+        try {
+            // Gọi API để tăng view cho bài hát
+            await fetch(`/songs/${songId}/incrementView`, { method: 'PUT' });
+
+            // Cập nhật cover và nguồn audio
+            coverImage.src = coverUrl;
+            audioSource.src = songUrl;
+
+            // Đảm bảo audio được tải và phát
+            await audioPlayer.load();
+            audioPlayer.play();
+            setupAudioVisualizer(audioPlayer, canvas);
+
+            // Fetch random songs sau khi phát bài hát
+            audioPlayer.addEventListener('playing', fetchRandomSongs);
+
+        } catch (error) {
+            console.error('Error playing the song:', error);
+        }
     }
-}
 
-// Hàm quay lại danh sách bài hát
-function goBack() {
-    location.reload();  // Tải lại trang
-}
+
+    audioPlayer.onended = function() {
+        fetch('/randomSong')
+            .then(response => response.json())
+            .then(song => {
+                audioSource.src = song.link; // Update the audio source
+                coverImage.src = song.cover; // Update the cover image
+
+                audioPlayer.load(); // Ensure the audio is loaded
+                audioPlayer.play();
+            })
+            .catch(error => console.error('Error fetching random song:', error));
+    };
+
+
+    window.playSong = playSong; // Make playSong globally accessible
+
+    function goBack() {
+        location.reload();
+    }
+});

@@ -2,17 +2,16 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background: linear-gradient(270deg, #854129, #375283, #42856f, #713955);
+    background: linear-gradient(270deg, #b63232, #315db1, #8025bc, #56b322);
     background-size: 800% 800%;
     animation: gradientAnimation 90s ease infinite;
-    color: #333;
+    color: #f1550d;
     display: flex;
 }
 
-
 /* Sidebar */
 .sidebar {
-    background-color: #4d91d8;
+    background: linear-gradient(135deg, #4d91d8, #357ABD);
     width: 225px;
     height: 100vh;
     position: fixed;
@@ -20,11 +19,15 @@ body {
     left: 0;
     padding: 20px;
     box-sizing: border-box;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
 }
 
 .sidebar h2 {
-    color: #ca5e5e;
+    color: #fff;
     text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 30px;
 }
 
 .sidebar ul {
@@ -33,17 +36,43 @@ body {
 }
 
 .sidebar ul li {
-    margin: 10px 0;
+    margin: 15px 0;
+    font-size: 18px;
+    position: relative;
+    overflow: hidden;
 }
 
 .sidebar ul li a {
-    color: #fd5a9e;
+    color: #ffffff;
     text-decoration: none;
+    padding: 10px;
+    display: block;
+    position: relative;
+    transition: color 0.3s;
+}
+
+/* Gạch dưới thay đổi màu khi hover và active */
+.sidebar ul li a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 3px;
+    background-color: #fb9456; /* Màu gạch dưới */
+    transition: width 0.3s;
+}
+
+.sidebar ul li a:hover::after,
+.sidebar ul li a.active::after {
+    width: 100%; /* Gạch dưới mở rộng toàn bộ khi hover hoặc active */
 }
 
 .sidebar ul li a:hover {
-    text-decoration: underline;
+    color: #e311d7; /* Đổi màu chữ khi hover */
+    transform: scale(1.1);
 }
+
 
 /* Content bên phải */
 .content {

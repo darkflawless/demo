@@ -4,42 +4,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const audioSource = audioPlayer.querySelector('source');
     const coverImage = document.getElementById('cover-image');
     const canvas = document.getElementById('audioVisualizer');
-;
+
 
     fetchRandomSongs(); // Fetch initial random songs list
-
-    // Add click event to play buttons
-    buttons.forEach(button => {
-        button.addEventListener('click', function () {
-            const songUrl = button.getAttribute('data-link');
-            const coverUrl = button.getAttribute('data-cover');
-            playSong(songUrl, coverUrl);
-        });
-    });
-
-
-
-    async function playSong(songUrl, coverUrl) {
-        try {
-            coverImage.src = coverUrl;
-            audioSource.src = songUrl;
-            await audioPlayer.load(); // Đảm bảo rằng audio đã được load
-            audioPlayer.play();
-            setupAudioVisualizer(audioPlayer, canvas);
-
-            // Fetch random songs after playing the song
-            audioPlayer.addEventListener('playing', fetchRandomSongs);
-
-        } catch (error) {
-            console.error('Error playing the song:', error);
-        }
-    }
-
-    window.playSong = playSong; // Make playSong globally accessible
-
-    function goBack() {
-        location.reload();
-    }
 
     async function fetchRandomSongs() {
         try {
@@ -63,10 +30,11 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
+    window.fetchRandomSongs = fetchRandomSongs; // Make playSong globally accessible
 
     function updateRandomSongs(songs) {
         const randomSongsContainer = document.querySelector('.recommended-songs ul');
-        randomSongsContainer.innerHTML = ''; // Clear existing content
+        randomSongsContainer.innerHTML = ''; // Xóa nội dung hiện có
 
         songs.forEach(song => {
             const songItem = document.createElement('li');
@@ -75,10 +43,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
             const songDiv = document.createElement('div');
             songDiv.style = `background-image: url(${song.cover}); background-size: cover; height: 120px; width: 120px; margin-bottom: 10px; cursor: pointer;`;
+            songDiv.setAttribute('data-id', song.id); // Thêm thuộc tính id
             songDiv.setAttribute('data-link', song.link);
             songDiv.setAttribute('data-cover', song.cover);
             songDiv.addEventListener('click', function () {
-                playSong(song.link, song.cover);
+                playSong(song.id, song.link, song.cover); // Truyền song.id vào playSong
             });
 
             songItem.appendChild(songDiv);
@@ -89,10 +58,11 @@ document.addEventListener("DOMContentLoaded", function () {
             songName.style.whiteSpace = 'nowrap';
             songName.style.overflow = 'hidden';
             songName.style.textOverflow = 'ellipsis';
-            songName.style.width = '120px'; // Đảm bảo giống với kích thước của songDiv để giữ đồng nhất
+            songName.style.width = '120px';
             songItem.appendChild(songName);
 
             randomSongsContainer.appendChild(songItem);
         });
     }
+
 });

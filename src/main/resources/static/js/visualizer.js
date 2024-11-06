@@ -47,7 +47,6 @@ function setupAudioVisualizer(audioElement, canvasElement) {
 
     }
 
-
     audioElement.addEventListener('play', () => {
         audioContext.resume(); // Ensure audio context is activated
         draw();

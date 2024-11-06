@@ -1,7 +1,9 @@
 document.addEventListener("DOMContentLoaded", function () {
     const searchInput = document.getElementById('searchInput');
     const songItemsContainer = document.querySelector('.song-list');
-
+    const audioPlayer = document.getElementById('audio-player');
+    const coverImage = document.getElementById('cover-image');
+    
     // Add input event to search box
     searchInput.addEventListener('input', async function () {
         const query = searchInput.value.toLowerCase();
@@ -30,7 +32,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function updateSongList(songs) {
-        songItemsContainer.innerHTML = ''; // Clear existing content
+        songItemsContainer.innerHTML = ''; // Xóa nội dung hiện có
 
         songs.forEach(song => {
             const songItem = document.createElement('div');
@@ -40,10 +42,12 @@ document.addEventListener("DOMContentLoaded", function () {
             const songDiv = document.createElement('div');
             songDiv.className = 'song-cover play-btn';
             songDiv.style = `background-image: url(${song.cover}); background-size: cover; height: 120px; width: 120px; margin-bottom: 10px; cursor: pointer;`;
+
+            songDiv.setAttribute('data-id', song.id); // Thêm thuộc tính id
             songDiv.setAttribute('data-link', song.link);
             songDiv.setAttribute('data-cover', song.cover);
             songDiv.addEventListener('click', function () {
-                playSong(song.link, song.cover);
+                playSong(song.id, song.link, song.cover); // Truyền song.id vào hàm playSong
             });
 
             songItem.appendChild(songDiv);
@@ -54,12 +58,13 @@ document.addEventListener("DOMContentLoaded", function () {
             songName.style.whiteSpace = 'nowrap';
             songName.style.overflow = 'hidden';
             songName.style.textOverflow = 'ellipsis';
-            songName.style.width = '120px'; // Ensure it matches the size of songDiv for consistency
+            songName.style.width = '120px';
             songItem.appendChild(songName);
 
             songItemsContainer.appendChild(songItem);
         });
     }
+
 
     // Fetch top 3 songs on initial load
     fetchTopSongs();

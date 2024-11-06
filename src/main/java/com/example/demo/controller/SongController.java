@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.model.Song;
 import com.example.demo.repository.SongRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +29,7 @@ public class SongController {
 
     @GetMapping("/songs")
     public String getSongs(Model model) {
-        List<Song> topSongs = songRepository.findTop3ByOrderByIdAsc();
+        List<Song> topSongs = songRepository.findTop3ByOrderByViewDesc();
         List<Song> allSongs = songRepository.findAll();
         List<Song> recommendedSongs = songRepository.findTop3Random();
 
@@ -42,7 +43,7 @@ public class SongController {
     @GetMapping("/topSongs")
     @ResponseBody
     public List<Song> getTopSongs() {
-        return songRepository.findTop3ByOrderByIdAsc();
+        return songRepository.findTop3ByOrderByViewDesc();
     }
 
     @GetMapping("/randomSongs")
@@ -50,6 +51,19 @@ public class SongController {
     public List<Song> getRandomSongs() {
         return songRepository.findTop3Random();
     }
+
+    @PutMapping("/songs/{id}/incrementView")
+    @ResponseBody
+    public ResponseEntity<Void> incrementView(@PathVariable Long id) {
+        Song song = songRepository.findById(id).orElse(null);
+        if (song != null) {
+            song.setView(song.getView() + 1);
+            songRepository.save(song); // Lưu lại để cập nhật database
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.notFound().build();
+    }
+
 
     @PostMapping("/uploadSong")
     public String handleFileUpload(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes) {

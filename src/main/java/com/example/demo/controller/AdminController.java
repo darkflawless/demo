@@ -22,4 +22,21 @@ public class AdminController {
         model.addAttribute("songs", songs);
         return "admin";
     }
+
+    @PostMapping("/admin")
+    public String addSong(@RequestParam("name") String name,
+                          @RequestParam("author") String author,
+                          @RequestParam("link") String url,
+                          Model model) {
+        Song newSong = new Song();
+
+        newSong.setFileName(name);
+        newSong.setAuthor(author);
+        newSong.setLink(url);
+
+        songRepository.save(newSong);
+
+        model.addAttribute("message", "Song added successfully");
+        return "admin";
+    }
 }
